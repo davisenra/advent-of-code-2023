@@ -18,15 +18,15 @@ class Puzzle1 implements PuzzleInterface
             $digits = array_filter($chars, fn ($char) => is_numeric($char));
             $digits = array_values($digits);
 
-            if (count($digits) === 1) {
-                $digitsToSum = $digits[0] . $digits[0];
+            if (1 === count($digits)) {
+                $digitsToSum = $digits[0].$digits[0];
                 $sum += (int) $digitsToSum;
                 continue;
             }
 
             $firstDigit = $digits[0];
             $lastDigit = end($digits);
-            $digitsToSum = $firstDigit . $lastDigit;
+            $digitsToSum = $firstDigit.$lastDigit;
             $sum += (int) $digitsToSum;
         }
 

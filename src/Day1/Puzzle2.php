@@ -30,7 +30,7 @@ class Puzzle2 implements PuzzleInterface
 
             $chars = mb_str_split($line);
             $digits = array_filter($chars, fn ($char) => is_numeric($char));
-            
+
             if (!empty($digits)) {
                 foreach ($digits as $position => $digit) {
                     $digitsFound[] = [
@@ -58,15 +58,15 @@ class Puzzle2 implements PuzzleInterface
                 return $a['position'] <=> $b['position'];
             });
 
-            if (count($digitsFound) === 1) {
-                $digitsToSum = $digitsFound[0]['digit'] . $digitsFound[0]['digit'];
+            if (1 === count($digitsFound)) {
+                $digitsToSum = $digitsFound[0]['digit'].$digitsFound[0]['digit'];
                 $sum += (int) $digitsToSum;
                 continue;
             }
 
             $firstDigit = $digitsFound[0]['digit'];
             $lastDigit = end($digitsFound)['digit'];
-            $digitsToSum = $firstDigit . $lastDigit;
+            $digitsToSum = $firstDigit.$lastDigit;
             $sum += (int) $digitsToSum;
         }
 

@@ -1,6 +1,6 @@
 <?php
 
-return "eighttkbtzjz6nineeight
+return 'eighttkbtzjz6nineeight
 5knjbxgvhktvfcq89onefive
 hnjcrxeightonejnlvm4hstmcsevensix
 trsdgcxcseven39dpmzs
@@ -999,4 +999,4 @@ six2qllhlxhr1foursixz8
 7dvt
 blhsm4xcrbrf68ninezvhhtqgphnzxlhl
 9dvjvfourtcthree
-onethreenfkgrvsevenkczctlgkt7";
+onethreenfkgrvsevenkczctlgkt7';
