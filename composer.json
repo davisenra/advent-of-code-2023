@@ -15,7 +15,8 @@
         }
     ],
     "scripts": {
-        "format": "./vendor/bin/pint --preset symfony"
+        "format": "./vendor/bin/pint --preset symfony",
+        "test": "./vendor/bin/pest"
     },
     "require": {
         "php": "^8.2",
