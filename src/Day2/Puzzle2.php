@@ -8,7 +8,7 @@ use AdventOfCode\PuzzleInterface;
 
 class Puzzle2 implements PuzzleInterface
 {
-    public function solve(string $input)
+    public function solve(string $input): int
     {
         $records = explode("\n", $input);
 

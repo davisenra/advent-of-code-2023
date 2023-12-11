@@ -12,7 +12,7 @@ class Puzzle1 implements PuzzleInterface
     private const MAX_GREEN_CUBES = 13;
     private const MAX_BLUE_CUBES = 14;
 
-    public function solve(string $input)
+    public function solve(string $input): int
     {
         $records = explode("\n", $input);
 
