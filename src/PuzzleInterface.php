@@ -6,5 +6,5 @@ namespace AdventOfCode;
 
 interface PuzzleInterface
 {
-    public function solve(string $input);
+    public function solve(string $input): int;
 }
