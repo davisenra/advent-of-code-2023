@@ -2,6 +2,7 @@
     "name": "davi/advent-of-code-2023",
     "type": "project",
     "license": "MIT",
+    "description": "Puzzles from Advent of Code 2023",
     "autoload": {
         "psr-4": {
             "AdventOfCode\\": "src/"
