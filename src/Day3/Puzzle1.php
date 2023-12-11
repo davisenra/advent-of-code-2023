@@ -50,8 +50,6 @@ class Puzzle1 implements PuzzleInterface
             }
         }
 
-        dd($digitsMap);
-
         $sum = 0;
 
         return $sum;
