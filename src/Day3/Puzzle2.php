@@ -6,13 +6,13 @@ namespace AdventOfCode\Day3;
 
 use AdventOfCode\PuzzleInterface;
 
-class Puzzle1 implements PuzzleInterface
+class Puzzle2 implements PuzzleInterface
 {
     private const SYMBOLS = ['*', '#', '$', '/', '&', '=', '%', '-', '@', '+'];
 
     public function solve(string $input): int
     {
-        $lines = explode("\n", $input);
+        $lines = collect(explode("\n", $input));
         $symbolsMap = [];
 
         foreach ($lines as $lineNumber => $line) {
@@ -61,30 +61,58 @@ class Puzzle1 implements PuzzleInterface
             }
         }
 
-        $sum = 0;
+        $adjacencyMap = [];
 
         foreach ($numbersMap as $lineNumber => $numbers) {
+            $adjacencyMap[$lineNumber] = [];
+
             foreach ($numbers as $number) {
-                if ($this->numberIsAdjacentToSymbol($lineNumber, $number, $symbolsMap)) {
-                    $sum += $number['value'];
+                $adjacencyPosition = $this->getAdjacencyPosition($lineNumber, $number, $symbolsMap);
+
+                if (!is_null($adjacencyPosition)) {
+                    $adjacencyMap[$lineNumber][$number['value']] = $adjacencyPosition;
                 }
             }
         }
 
-        return $sum;
+        $gearRatioSum = 0;
+        $lineNumber = 0;
+
+        do {
+            $previousLine = $adjacencyMap[$lineNumber - 1] ?? null;
+            $currentLine = $adjacencyMap[$lineNumber];
+            $nextLine = $adjacencyMap[$lineNumber + 1];
+
+            if (is_null($previousLine)) {
+                ++$lineNumber;
+                continue;
+            }
+
+            $lines = $previousLine + $currentLine + $nextLine;
+
+            foreach ($lines as $number => $position) {
+                if (in_array($position, $lines)) {
+                    // WIP
+                }
+            }
+
+            ++$lineNumber;
+        } while ($lineNumber < count($adjacencyMap) - 1);
+
+        return $gearRatioSum;
     }
 
-    private function numberIsAdjacentToSymbol(int $lineNumber, array $number, array $symbolsMap): bool
+    private function getAdjacencyPosition(int $lineNumber, array $number, array $symbolsMap): ?int
     {
         $startPosition = $number['start'];
         $endPosition = $number['end'];
 
         $currentLine = $symbolsMap[$lineNumber];
 
-        $hasSymbolOnLeftSideOrRightSide = !empty(array_intersect([$startPosition - 1, $endPosition + 1], $currentLine));
+        $leftSideOrRightSideAdjancencies = array_intersect([$startPosition - 1, $endPosition + 1], $currentLine);
 
-        if ($hasSymbolOnLeftSideOrRightSide) {
-            return true;
+        if (!empty($leftSideOrRightSideAdjancencies)) {
+            return reset($leftSideOrRightSideAdjancencies);
         }
 
         $aboveLine = $symbolsMap[$lineNumber - 1] ?? null;
@@ -92,22 +120,22 @@ class Puzzle1 implements PuzzleInterface
         $intervalToCheckOnAboveAndNextLine = range($startPosition - 1, $endPosition + 1);
 
         if (!is_null($aboveLine)) {
-            $isAdjacentToSymbolOnAboveLine = !empty(array_intersect($intervalToCheckOnAboveAndNextLine, $aboveLine));
+            $aboveLineAdjancencies = array_intersect($intervalToCheckOnAboveAndNextLine, $aboveLine);
 
-            if ($isAdjacentToSymbolOnAboveLine) {
-                return true;
+            if (!empty($aboveLineAdjancencies)) {
+                return reset($aboveLineAdjancencies);
             }
         }
 
         if (!is_null($nextLine)) {
-            $isAdjacentToSymbolOnNextLine = !empty(array_intersect($intervalToCheckOnAboveAndNextLine, $nextLine));
+            $nextLineAdjancencies = array_intersect($intervalToCheckOnAboveAndNextLine, $nextLine);
 
-            if ($isAdjacentToSymbolOnNextLine) {
-                return true;
+            if (!empty($nextLineAdjancencies)) {
+                return reset($nextLineAdjancencies);
             }
         }
 
-        return false;
+        return null;
     }
 
     private function characterSequenceSliceToInteger(array $sequence): int
